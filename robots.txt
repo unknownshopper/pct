@@ -1,0 +1,30 @@
+# robots.txt para pc-t.mx
+# Proveedora y Comercializadora Tabasqueña S.A. de C.V.
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /aviso.html
+Allow: /img/
+Allow: /style.css
+Allow: /aviso-style.css
+Allow: /script.js
+
+# Archivos y directorios a excluir
+Disallow: /pc-t.mx/
+
+# Sitemap
+Sitemap: https://pc-t.mx/sitemap.xml
+
+# Rastreadores específicos
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Tiempo de rastreo (10 segundos entre peticiones)
+Crawl-delay: 10
