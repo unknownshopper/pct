@@ -684,6 +684,36 @@ footer a:hover {
 }
 
 /* ============================================
+   CUSTOM BULLETS - Logo PCT
+   ============================================ */
+.content-section ul li,
+.spec-list li,
+.mission-box ul li,
+.vision-box ul li {
+    list-style: none;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+}
+
+.content-section ul li::before,
+.spec-list li::before,
+.mission-box ul li::before,
+.vision-box ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    background-image: url('img/logosch.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8;
+}
+
+/* ============================================
    RESPONSIVE DESIGN
    ============================================ */
 @media (max-width: 768px) {
