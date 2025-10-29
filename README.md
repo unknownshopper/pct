@@ -221,3 +221,4 @@ Todos los derechos reservados.
 **Última actualización**: 28 de octubre de 2025
 **Versión**: 1.0
 # pct
+
