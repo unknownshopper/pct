@@ -16,12 +16,15 @@ document.addEventListener('DOMContentLoaded', function() {
     initParallaxScroll();
     initServiceCards();
     initStatCountersClick();
+    initMobileMenu();
     setHeaderHeightVar();
     window.addEventListener('resize', setHeaderHeightVar);
     window.addEventListener('load', setHeaderHeightVar);
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js').catch(() => {});
     }
+    initBackToTop();
+    stabilizeHeaderHeight();
     
 });
 
@@ -43,6 +46,53 @@ function initSmoothScroll() {
     });
 }
 
+// ============================================
+// 13. Mobile Hamburger Menu
+// ============================================
+function initMobileMenu() {
+    const header = document.querySelector('header');
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('primary-menu');
+    if (!header || !toggle || !menu) return;
+
+    function openMenu() {
+        header.classList.add('menu-open');
+        document.body.classList.add('menu-open');
+        toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeMenu() {
+        header.classList.remove('menu-open');
+        document.body.classList.remove('menu-open');
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', () => {
+        const isOpen = header.classList.contains('menu-open');
+        isOpen ? closeMenu() : openMenu();
+    });
+
+    // Cerrar al hacer click en links del menú
+    menu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => closeMenu());
+    });
+
+    // Cerrar con click fuera
+    document.addEventListener('click', (e) => {
+        if (!header.classList.contains('menu-open')) return;
+        if (!header.contains(e.target)) closeMenu();
+    });
+
+    // Cerrar con Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeMenu();
+    });
+
+    // Cerrar si se reescala a desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeMenu();
+    });
+}
 // ============================================
 // 2. AOS - Animate On Scroll (Sistema Manual)
 // ============================================
@@ -73,7 +123,43 @@ function setHeaderHeightVar() {
     const header = document.querySelector('header');
     if (!header) return;
     const h = header.offsetHeight;
-    document.documentElement.style.setProperty('--header-h', h + 'px');
+    const buffer = 12; // buffer moderado para Chrome
+    const total = h + buffer;
+    document.documentElement.style.setProperty('--header-h', total + 'px');
+    const spacer = document.getElementById('header-spacer');
+    if (spacer) spacer.style.height = total + 'px';
+}
+
+// Utilidad: throttle
+function throttle(fn, wait) {
+    let last = 0;
+    return function(...args) {
+        const now = Date.now();
+        if (now - last >= wait) {
+            last = now;
+            fn.apply(this, args);
+        }
+    };
+}
+
+// ============================================
+// Back to Top Button
+// ============================================
+function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+    const toggle = () => {
+        if (window.pageYOffset > 400) {
+            btn.classList.add('show');
+        } else {
+            btn.classList.remove('show');
+        }
+    };
+    window.addEventListener('scroll', toggle);
+    toggle();
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 }
 
 // ============================================

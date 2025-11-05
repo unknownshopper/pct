@@ -8,8 +8,14 @@
     box-sizing: border-box;
 }
 
+/* Enforce a minimum spacer height on small screens */
+@media (max-width: 480px) {
+  #header-spacer { min-height: 76px; }
+}
+
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h, 120px);
 }
 
 body {
@@ -43,6 +49,26 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.nav-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-toggle .bar {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: #fff;
+    margin: 4px 0;
+    border-radius: 2px;
 }
 
 .logo-container {
@@ -114,7 +140,7 @@ nav a:hover {
    HERO SECTION - Parallax Full Screen
    ============================================ */
 .hero-parallax {
-    height: 100svh;
+    min-height: 100svh;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -122,11 +148,10 @@ nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: var(--header-h, 120px);
 }
 
 .hero-overlay {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     right: 0;
@@ -135,12 +160,13 @@ nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
+    min-height: 100%;
 }
 
 .hero-content {
     text-align: center;
     color: white;
-    z-index: 10;
     padding: 40px;
     max-width: 1200px;
 }
@@ -637,6 +663,35 @@ footer a:hover {
     text-decoration: underline;
 }
 
+/* Header spacer to avoid overlap with fixed navbar */
+#header-spacer {
+    height: var(--header-h, 120px);
+}
+
+/* Back to Top */
+#back-to-top {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    background: rgba(255, 123, 0, 0.9);
+    color: #fff;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    display: none;
+    z-index: 1200;
+}
+
+#back-to-top.show {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* ============================================
    ANIMATIONS
    ============================================ */
@@ -763,23 +818,30 @@ footer a:hover {
         height: 50px;
     }
     
-    nav {
-        width: 100%;
-        justify-content: center;
-    }
+    .nav-toggle { display: inline-flex; }
+    nav { width: 100%; justify-content: flex-end; position: relative; }
     
-    nav ul {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 0;
-        justify-content: center;
+    nav ul#primary-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        left: 0;
+        background: rgba(0,0,0,0.9);
+        padding: 10px 12px;
+        flex-direction: column;
+        gap: 6px;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        z-index: 1100;
     }
+    header.menu-open nav ul#primary-menu { display: flex; }
     
     nav a {
         font-size: 0.85em;
         padding: 8px 12px;
     }
+    nav ul#primary-menu a { display: block; width: 100%; }
 
     .nav-mail svg {
         width: 16px;
@@ -792,6 +854,10 @@ footer a:hover {
     .hero-content {
         padding: 30px 20px;
     }
+    .hero-parallax {
+        min-height: auto;
+        padding-bottom: 120px;
+    }
     
     .hero-content h1 {
         font-size: 2.2em;
@@ -803,7 +869,7 @@ footer a:hover {
     }
     
     .stats-container {
-        gap: 15px;
+        gap: 12px;
         flex-direction: column;
         padding: 0 10px;
         align-items: center;
@@ -884,8 +950,9 @@ footer a:hover {
     .hero-parallax,
     .parallax-divider {
         background-attachment: scroll;
-        min-height: 400px;
     }
+    .parallax-divider { min-height: 400px; }
+    .hero-parallax { min-height: 100svh; }
     
     .parallax-text {
         font-size: 2em;
@@ -921,6 +988,14 @@ footer a:hover {
 
 /* Mobile */
 @media (max-width: 480px) {
+    /* Extra espacio inferior para contener stats dentro del hero */
+    .hero-parallax {
+        min-height: auto;
+        padding-bottom: 160px;
+    }
+    .hero-content {
+        padding-bottom: 20px;
+    }
     /* Header */
     header {
         padding: 5px 0;
@@ -967,7 +1042,7 @@ footer a:hover {
     }
     
     .stat-item {
-        padding: 20px 15px;
+        padding: 18px 14px;
     }
     
     .stat-item .counter {
@@ -1038,10 +1113,8 @@ footer a:hover {
     }
     
     /* Parallax */
-    .hero-parallax,
-    .parallax-divider {
-        min-height: 300px;
-    }
+    .parallax-divider { min-height: 300px; }
+    .hero-parallax { min-height: 100svh; }
     
     .parallax-text {
         font-size: 1.5em;
