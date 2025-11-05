@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
     setHeaderHeightVar();
     window.addEventListener('resize', setHeaderHeightVar);
     window.addEventListener('load', setHeaderHeightVar);
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
     
 });
 
