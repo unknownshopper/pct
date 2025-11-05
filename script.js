@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initParallaxScroll();
     initServiceCards();
     initStatCountersClick();
+    setHeaderHeightVar();
+    window.addEventListener('resize', setHeaderHeightVar);
+    window.addEventListener('load', setHeaderHeightVar);
     
 });
 
@@ -58,6 +61,16 @@ function initAOSAnimations() {
     document.querySelectorAll('[data-aos]').forEach(element => {
         observer.observe(element);
     });
+}
+
+// ============================================
+// 6B. Ajustar variable CSS con la altura real del header
+// ============================================
+function setHeaderHeightVar() {
+    const header = document.querySelector('header');
+    if (!header) return;
+    const h = header.offsetHeight;
+    document.documentElement.style.setProperty('--header-h', h + 'px');
 }
 
 // ============================================
@@ -183,6 +196,11 @@ function initTypingEffect() {
     
     typingElements.forEach(element => {
         const text = element.textContent;
+        // Reservar altura final para evitar saltos de layout
+        const original = text;
+        element.textContent = original;
+        const reservedHeight = element.getBoundingClientRect().height;
+        element.style.minHeight = reservedHeight + 'px';
         element.textContent = '';
         element.style.borderRight = '2px solid #FF7B00';
         element.style.paddingRight = '5px';

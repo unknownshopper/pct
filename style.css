@@ -92,6 +92,18 @@ nav a {
     letter-spacing: 1px;
 }
 
+/* Discreet mail icon link */
+nav a.nav-mail {
+    padding: 4px 6px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+nav a.nav-mail:hover {
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    transform: none;
+}
+
 nav a:hover {
     background-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
@@ -109,7 +121,7 @@ nav a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 60px;
+    margin-top: var(--header-h, 120px);
 }
 
 .hero-overlay {
@@ -767,6 +779,13 @@ footer a:hover {
         font-size: 0.85em;
         padding: 8px 12px;
     }
+
+    .nav-mail svg {
+        width: 16px;
+        height: 16px;
+        opacity: 0.7;
+        vertical-align: middle;
+    }
     
     /* Hero Section */
     .hero-content {
@@ -917,6 +936,13 @@ footer a:hover {
         font-size: 0.75em;
         padding: 6px 10px;
         letter-spacing: 0.5px;
+    }
+
+    .nav-mail svg {
+        width: 14px;
+        height: 14px;
+        opacity: 0.7;
+        vertical-align: middle;
     }
     
     /* Hero Section */
@@ -1077,6 +1103,13 @@ footer a:hover {
     nav a {
         font-size: 0.7em;
         padding: 5px 8px;
+    }
+
+    .nav-mail svg {
+        width: 12px;
+        height: 12px;
+        opacity: 0.7;
+        vertical-align: middle;
     }
 }
 /* ============================================
